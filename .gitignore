@@ -1,0 +1,6 @@
+data/*
+env/*
+output/*
+build/*
+dist/*
+files.txt
