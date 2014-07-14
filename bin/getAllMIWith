@@ -3,16 +3,25 @@
 import sys, os
 import numpy as np
 
-from pymibspline.bspline import mi
-from pymibspline.LabeledMat import LabeledMat
+from pymi.bspline import *
+from pymi.LabeledMat import LabeledMat
 
 # load clinical files
 
-x_gen = LabeledMat.loadFile("data/Q1_training_genetic_gwas.txt", 
+if len(sys.argv) < 3:
+    print >> sys.stderr, "Usage: getAllMIWz FILE_NAME ROW_NAME"
+    sys.exit(1)
+
+x = LabeledMat.loadFile(sys.argv[1], 
         dt=float, 
         verbose=False)
 
-fixed = x_gen["19_45411941_45411941_C",:].data[0]
+fixed = x.data[x.rowmap[sys.argv[2]],:]
 
-out = zip(x_gen.rownames, map(lambda r: mi(r, fixed) , x_gen.data))
+out = all_mi(x, fixed)
+
+for s in sorted(out, key=out.get, reverse=True):
+    print >> sys.stdout, s + '\t' + str(out[s])
+
+
 

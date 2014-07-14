@@ -3,4 +3,7 @@ env/*
 output/*
 build/*
 dist/*
+*/bkup
 files.txt
+bin/reinstallPkg
+bin/*.txt
